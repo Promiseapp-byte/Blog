@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="My colorful, SEO-friendly blog site with multiple posts, social media, comments, and contact info." />
+        <meta name="keywords" content="blog, articles, comments, social media, contact, SEO" />
+        <meta name="author" content="Your Name" />
+        <title>VenusMind Blog</title>
+        <!-- Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <style>
+            *, *::before, *::after {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(to right, #ffe3e3, #e0f7fa);
+                color: #333;
+                line-height: 1.6;
+            }
+            header {
+                background-color: #ff6f61;
+                color: #fff;
+                padding: 20px 0;
+                text-align: center;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                position: relative;
+            }
+            .logo-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+            .logo-placeholder {
+                width: 60px;
+                height: 60px;
+                background-color: #fff;
+                border-radius: 50%;
+                border: 2px solid #ccc;
+                margin-right: 15px;
+            }
+            header h1 {
+                margin: 0;
+                font-family: 'Georgia', serif;
+                font-size: 2.5em;
+            }
+            nav {
+                margin-top: 10px;
+            }
+            nav ul {
+                list-style: none;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                padding: 0;
+            }
+            nav ul li {
+                margin: 0 15px;
+            }
+            nav ul li a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 1.1em;
+                padding: 8px 12px;
+                transition: background 0.3s;
+            }
+            nav ul li a:hover {
+                background-color: #ff3b2e;
+                border-radius: 5px;
+            }
+            #nav-ads {
+                display: none; /* Hidden from users, but kept in DOM for backend if needed */
+            }
+            section {
+                padding: 20px;
+                max-width: 950px;
+                margin: auto;
+            }
+
+            /* Post styling */
+            .post {
+                background: #fff;
+                margin-bottom: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                overflow: hidden;
+            }
+            .post h2 {
+                margin-top: 0;
+                background-color: #ffd700;
+                padding: 15px;
+                margin: 0;
+            }
+            .post img {
+                width: 100%;
+                height: auto;
+            }
+            .post p {
+                padding: 0 15px 15px 15px;
+            }
+            .date {
+                font-size: 0.9em;
+                color: #555;
+                margin-bottom: 10px;
+            }
+            .read-more {
+                display: inline-block;
+                margin: 10px 15px;
+                padding: 8px 12px;
+                background-color: #4caf50;
+                color: #fff;
+                border-radius: 5px;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .read-more:hover {
+                background-color: #45a049;
+            }
+            button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 8px 12px;
+                cursor: pointer;
+                margin: 10px 15px 0 15px;
+                border-radius: 5px;
+                font-size: 1em;
+                transition: background 0.3s;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            /* Comments toggle button */
+            .comments-btn {
+                background-color: #6c757d;
+            }
+            /* Comments section styling */
+            .comments {
+                margin-top: 15px;
+                padding: 10px;
+                background-color: #f0f8ff;
+                border-radius: 8px;
+                display: none; /* Hidden by default, toggle with JS */
+            }
+            .comments.show {
+                display: block;
+            }
+            .comments h3 {
+                margin-top: 0;
+            }
+            /* User name and message form style */
+            .comment-form {
+                display: flex;
+                flex-direction: column;
+            }
+            .comment-form label {
+                font-weight: bold;
+                margin-top: 10px;
+            }
+            .comment-form input, .comment-form textarea {
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                margin-top: 4px;
+            }
+            /* Post reply button */
+            .post-comment {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 8px 12px;
+                margin-top: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .post-comment:hover {
+                background-color: #0069d9;
+            }
+            /* Reply button in comments */
+            .reply-btn {
+                background: none;
+                border: none;
+                color: #007bff;
+                cursor: pointer;
+                font-size: 0.9em;
+                margin-left: 10px;
+            }
+            /* Nested comments container */
+            .nested-comments {
+                margin-left: 20px;
+                margin-top: 10px;
+            }
+            /* Footer social icons styling with real colored icons */
+            #footer-social {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin: 30px 0;
+            }
+            .footer-social-icon {
+                font-size: 24px;
+                color: #555;
+                transition: transform 0.2s, color 0.2s;
+            }
+             .footer-social-icon:hover {
+                transform: scale(1.2);
+                color: #000;
+            }
+            /* Specific icon colors */
+            .fa-facebook { color: #3b5998; }
+            .fa-pinterest { color: #bd081c; }
+            .fa-youtube { color: #ff0000; }
+            .fa-x-twitter { color: #1da1f2; }
+            /* Ad slider styling */
+            #ads-section {
+                position: relative;
+                overflow: hidden;
+                height: 80px;
+                background-color: #ffe4b5;
+                padding: 20px;
+                margin: 40px 0;
+                border-radius: 10px;
+            }
+            #ads-slider {
+                display: flex;
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                align-items: center;
+                transition: transform 1s linear;
+            }
+            .ad-item {
+                min-width: 300px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 20px;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+            /* About & Contact styling */
+            #about, #contact {
+                background-color: #d1c4e9;
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 40px;
+            }
+            #about h2, #contact h2 {
+                margin-top: 0;
+            }
+            /* Footer styling */
+            footer {
+                background-color: #333;
+                color: #fff;
+                padding: 15px 0;
+                text-align: center;
+            }
+            /* About the author section style (added later) */
+            #about-author {
+                background-color: #f9f9f9;
+                padding: 20px;
+                margin-top: 40px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #about-author img {
+                width: 95px;
+                height: 140px;
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: 20px;
+            }
+            #about-author div {
+                flex: 1;
+            }
+            /* Responsive adjustments */
+            @media(max-width: 600px){
+                nav ul {
+                    flex-direction: column;
+                }
+                #footer-social {
+                    flex-direction: column;
+                }
+                #about-author {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                #about-author img {
+                    margin-bottom: 10px;
+                }
+            }
+        </style>
+        </head>
+        <body>
+        <header>
+            <div class="logo-container">
+                <div class="logo" ></div>
+                <img src="images/logo.jpeg" alt="logo" width="50" height="50" />
+                <h1>VenusMind Blog</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#posts">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <!-- "Ads" menu item hidden from users -->
+                    <li id="nav-ads"><a href="#ads-section">Ads</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Blog posts -->
+        <section id="posts" class="posts-section">
+            <!-- Post 1 -->
+            <article class="post" id="post1" data-views="0">
+                <h2>First Blog Post</h2>
+                <img src="images/fbi.jpg" alt="Image for First Story" width="2560" height="1437" />
+                <p class="date">Published on October 1, 2025</p>
+                <p>This is the first blog post. Welcome to my blog! Stay tuned for more updates.</p>
+                <p><strong>Tags:</strong> introduction, welcome, first</p>
+                <a class="read-more" href="#">Read more</a>
+                <button class="comments-btn" onclick="toggleComments('post1')">Comments</button>
+                <div id="comments-post1" class="comments">
+                    <h3>Comments</h3>
+                    <div id="comment-section-post1">
+                        <!-- Main comment form -->
+                        <div class="comment-form">
+                            <label>Name:</label>
+                            <input type="text" id="name-input-post1" placeholder="Your Name" />
+                            <label>Message:</label>
+                            <textarea id="message-input-post1" rows="3" placeholder="Your comment"></textarea>
+                            <button class="post-comment" onclick="submitComment('post1')">Post</button>
+                        </div>
+                        <!-- Comments list -->
+                        <ul id="comment-list-post1"></ul>
+                    </div>
+                </div>
+            </article>
+            <!-- Post 2 -->
+            <article class="post" id="post2" data-views="0">
+                <h2>Second Blog Post</h2>
+                <img src="images/Edem_CSA.jpg" alt="Image for Second Story" width="2048" height="1249" />
+                <p class="date">Published on October 2, 2025</p>
+                <p>This is the second blog post. More content coming soon.</p>
+                <p><strong>Tags:</strong> update, news, second</p>
+                <a class="read-more" href="#">Read more</a>
+                <button class="comments-btn" onclick="toggleComments('post2')">Comments</button>
+                <div id="comments-post2" class="comments">
+                    <h3>Comments</h3>
+                    <div id="comment-section-post2">
+                        <div class="comment-form">
+                            <label>Name:</label>
+                            <input type="text" id="name-input-post2" placeholder="Your Name" />
+                            <label>Message:</label>
+                            <textarea id="message-input-post2" rows="3" placeholder="Your comment"></textarea>
+                            <button class="post-comment" onclick="submitComment('post2')">Post</button>
+                        </div>
+                        <ul id="comment-list-post2"></ul>
+                    </div>
+                </div>
+            </article>
+            <!-- Post 3 -->
+            <article class="post" id="post3" data-views="0">
+                <h2>Third Blog Post</h2>
+                <img src="images/samgoerge.jpg" alt="Image for Third Story" width="653" height="435" />
+                <p class="date">Published on October 3, 2025</p>
+                <p>This is the third blog post. Exciting new content here! Stay tuned.</p>
+                <p><strong>Tags:</strong> exciting, new, third</p>
+                <a class="read-more" href="#">Read more</a>
+                <button class="comments-btn" onclick="toggleComments('post3')">Comments</button>
+                <div id="comments-post3" class="comments">
+                    <h3>Comments</h3>
+                    <div id="comment-section-post3">
+                        <div class="comment-form">
+                            <label>Name:</label>
+                            <input type="text" id="name-input-post3" placeholder="Your Name" />
+                            <label>Message:</label>
+                            <textarea id="message-input-post3" rows="3" placeholder="Your comment"></textarea>
+                            <button class="post-comment" onclick="submitComment('post3')">Post</button>
+                        </div>
+                        <ul id="comment-list-post3"></ul>
+                    </div>
+                </div>
+            </article>
+            <!-- Post 4 -->
+            <article class="post" id="post4" data-views="0">
+                <h2>Fourth Blog Post</h2>
+                <img src="images/special prosecutor.jpg" alt="Image for Fourth Story" width="640" height="457" />
+                <p class="date">Published on October 4, 2025</p>
+                <p>This is the fourth blog post. More exciting stuff ahead!</p>
+                <p><strong>Tags:</strong> fourth, update, news</p>
+                <a class="read-more" href="#">Read more</a>
+                <button class="comments-btn" onclick="toggleComments('post4')">Comments</button>
+                <div id="comments-post4" class="comments">
+                    <h3>Comments</h3>
+                    <div id="comment-section-post4">
+                        <div class="comment-form">
+                            <label>Name:</label>
+                            <input type="text" id="name-input-post4" placeholder="Your Name" />
+                            <label>Message:</label>
+                            <textarea id="message-input-post4" rows="3" placeholder="Your comment"></textarea>
+                            <button class="post-comment" onclick="submitComment('post4')">Post</button>
+                        </div>
+                        <ul id="comment-list-post4"></ul>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Ads Slider -->
+        <section id="ads-section">
+            <div id="ads-slider">
+                <div class="ad-item" style="background-color:#ffe4e1;">Ad Space 1</div>
+                <div class="ad-item" style="background-color:#ffd700;">Ad Space 2</div>
+                <div class="ad-item" style="background-color:#90ee90;">Ad Space 3</div>
+                <div class="ad-item" style="background-color:#add8e6;">Ad Space 4</div>
+            </div>
+        </section>
+        <!-- About the Blog -->
+        <section id="about">
+            <h2>About This Blog</h2>
+            <p style="max-width:700px; margin:auto;">This is a vibrant, SEO-friendly blog created to inspire and inform. Feel free to explore, comment, and connect with us on social media! Keywords: blog, articles, comments, social media, colorful, SEO.</p>
+            <p><strong>Tags:</strong> blog, colorful, SEO, comments, social media, articles</p>
+        </section>
+
+        <!-- About the Author -->
+        <section id="about-author">
+            <img src="images/longsleeve.jpg" alt="Author Photo" width="10" height="20" />
+            <div>
+                <h3>About the Author</h3>
+                <p>Hi! I'm <b>Promise Ahlijah</b>, passionate blogger and content creator. I love sharing insights, stories, and connecting with readers. Welcome to my world!</p>
+            </div>
+        </section>
+
+        <!-- Contact Us -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p><strong>Email:</strong> info@cyberspheresolutionsgh.com</p>
+            <p><strong>Phone:</strong> +233244510872</p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 VenusMind Blog | Developed by: CyberSphere Integrated Solutions.</p>
+            <!-- Social icons in footer for redundancy -->
+            <div id="footer-social-bottom" style="margin-top:10px;">
+                <a href="https://facebook.com" class="fab fa-facebook-f footer-social-icon" target="_blank" aria-label="Facebook"></a>
+                <a href="https://x.com" class="fab fa-x-twitter footer-social-icon" target="_blank" aria-label="X (Twitter)"></a>
+                <a href="https://youtube.com" class="fab fa-youtube footer-social-icon" target="_blank" aria-label="YouTube"></a>
+                <a href="https://pinterest.com" class="fab fa-pinterest-p footer-social-icon" target="_blank" aria-label="Pinterest"></a>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script>
+            // Function to toggle comment sections
+            function toggleComments(postId) {
+                document.getElementById('comments-' + postId).classList.toggle('show');
+            }
+
+            // Handle main comment submission
+        function submitComment(postId) {
+            const nameField = document.getElementById('name-input-' + postId);
+            const messageField = document.getElementById('message-input-' + postId);
+            const commentList = document.getElementById('comment-list-' + postId);
+            const name = nameField.value.trim();
+            const message = messageField.value.trim();
+            if (!name || !message) {
+                alert('Please enter your name and message.');
+                return;
+            }
+            // Create comment list item
+            const li = document.createElement('li');
+            li.className = 'comment-item';
+
+            li.innerHTML = `<strong>${name}:</strong> ${message} <button class="reply-btn" onclick="showReplyForm('${postId}', this)">Reply</button>`;
+            // Append to comment list
+            commentList.appendChild(li);
+            // Clear form
+            nameField.value = '';
+            messageField.value = '';
+        }
+
+        // Show reply form
+        function showReplyForm(postId, btn) {
+            const commentItem = btn.closest('.comment-item');
+            let replyDiv = commentItem.querySelector('.reply-form-container');
+            if (!replyDiv) {
+                replyDiv = document.createElement('div');
+                replyDiv.className = 'reply-form-container';
+                replyDiv.innerHTML = `
+                    <div class="comment-form nested">
+                        <label>Name:</label>
+                        <input type="text" placeholder="Your Name" class="reply-name" />
+                        <label>Message:</label>
+                        <textarea rows="2" placeholder="Your reply" class="reply-message"></textarea>
+                        <button class="post-comment" onclick="postReply('${postId}', this)">Post Reply</button>
+                        <button class="reply-cancel" onclick="cancelReply(this)">Cancel</button>
+                    </div>
+                `;
+                commentItem.appendChild(replyDiv);
+            } else {
+                replyDiv.style.display = 'block';
+            }
+            // Hide reply button
+            btn.style.display = 'none';
+        }
+
+        // Cancel reply
+        function cancelReply(btn) {
+            const replyDiv = btn.closest('.reply-form-container');
+            replyDiv.style.display = 'none';
+            // Show the reply button again
+            const commentItem = replyDiv.closest('.comment-item');
+            const replyBtn = commentItem.querySelector('.reply-btn');
+            replyBtn.style.display = 'inline-block';
+        }
+
+        // Post reply
+        function postReply(postId, btn) {
+            const replyDiv = btn.closest('.nested');
+            const name = replyDiv.querySelector('.reply-name').value.trim();
+            const message = replyDiv.querySelector('.reply-message').value.trim();
+            if (!name || !message) {
+                alert('Please enter your name and message.');
+                return;
+            }
+            const commentItem = replyDiv.closest('.comment-item');
+
+            // Create reply element
+            const replyLi = document.createElement('li');
+            replyLi.className = 'nested-comment';
+            replyLi.innerHTML = `<strong>${name}:</strong> ${message}`;
+
+            // Append under nested comments
+            let nestedComments = commentItem.querySelector('.nested-comments');
+            if (!nestedComments) {
+                nestedComments = document.createElement('ul');
+                nestedComments.className = 'nested-comments';
+                commentItem.appendChild(nestedComments);
+            }
+            nestedComments.appendChild(replyLi);
+            // Hide reply form
+            replyDiv.style.display = 'none';
+            // Show reply button
+            const replyBtn = commentItem.querySelector('.reply-btn');
+            replyBtn.style.display = 'inline-block';
+
+            // Clear reply form fields
+            replyDiv.querySelector('.reply-name').value = '';
+            replyDiv.querySelector('.reply-message').value = '';
+        }
+
+        // Initialize event listener for main comment forms
+        document.querySelectorAll('.post-comment').forEach(btn => {
+            const parentForm = btn.closest('.comment-form');
+            const postId = parentForm.querySelector('button').getAttribute('onclick').match(/'([^']+)'/)[1];
+            btn.onclick = () => {
+                submitComment(postId);
+            };
+        });
+
+        // Auto slider
+        const adsSlider = document.getElementById('ads-slider');
+        let adIndex = 0;
+        const totalAds = document.querySelectorAll('.ad-item').length;
+        setInterval(() => {
+            adIndex = (adIndex + 1) % totalAds;
+            const shiftX = -adIndex * 300; // width of each ad
+            adsSlider.style.transform = `translateX(${shiftX}px)`;
+        }, 4000);
+        </script>
+        </body>
+        </html>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="My colorful, SEO-friendly blog site with multiple posts, social media, comments, and contact info." />
     <meta name="keywords" content="blog, articles, comments, social media, contact, SEO" />
-    <meta name="author" content="Promise Ahlijah" />
+    <meta name="author" content="Your Name" />
     <title>VenusMind Blog</title>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -306,8 +306,8 @@
     <header>
         <div class="logo-container">
             <div class="logo" ></div>
-            <img src="images/blog_logo.png" alt="logo" width="115" height="124" />
-            <h1>VenusMind Blog</h1>
+            <img src="images/blog_logo.png" alt="logo" width="100" height="110" />
+            <h1>VenusMind</h1>
         </div>
         <nav>
             <ul>
@@ -430,8 +430,7 @@
     <!-- About the Blog -->
     <section id="about">
         <h2>About This Blog</h2>
-        <p style="max-width:700px; margin:auto;">This is a vibrant, SEO-friendly blog created to inspire and inform. Feel free to explore, comment, and connect with us on social media! Keywords: blog, articles, comments, social media, colorful, SEO.</p>
-        <p><strong>Tags:</strong> blog, colorful, SEO, comments, social media, articles</p>
+        <p style="max-width:700px; margin:auto;">This is a vibrant, SEO-friendly blog created to inspire and inform. Feel free to explore, comment, and connect with us on social media!</p>
     </section>
 
     <!-- About the Author -->
@@ -476,7 +475,12 @@
     <script>
     // Function to toggle comment sections
     function toggleComments(postId) {
-        document.getElementById('comments-' + postId).classList.toggle('show');
+        const commentsSection = document.getElementById('comments-' + postId);
+        if (commentsSection) {
+            commentsSection.classList.toggle('show');
+        } else {
+            console.error(`Comments section with ID comments-${postId} not found.`);
+        }
     }
 
     // Handle main comment submission
@@ -484,8 +488,7 @@
         const nameField = document.getElementById('name-input-' + postId);
         const messageField = document.getElementById('message-input-' + postId);
         const commentList = document.getElementById('comment-list-' + postId);
-        const name = nameField보기
-    System: .value.trim();
+        const name = nameField.value.trim();
         const message = messageField.value.trim();
         if (!name || !message) {
             alert('Please enter your name and message.');
